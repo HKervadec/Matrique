@@ -20,15 +20,18 @@ typedef struct FL{
 	char *arrow;
 } FL;
 
+
 void emptyScreen();
 void emptyLastLine(int row, int col);
 
-void initFL(FL *fL, int row, int col);
-void initFLArray(FL fL[], int size, int row, int col);
+void initFL(FL *fL, int row, int col, int length);
+FL *initFLArray(int size, int row, int col);
 
 void resetFL(FL *fL, int row, int col);
 void printFL(FL *fL, int row, int col);
 void updateFL(FL *fL, int row, int col);
+
+char randomChar();
 
 
 #endif

@@ -5,7 +5,13 @@
 #include <time.h>
 #include <stdbool.h>
 
+#include <X11/Xlib.h>
+
+// #include "vroot.h"
+
+
 #include "beautify.h"
+
 
 #define ARROW_NUMBER 64
 
@@ -14,16 +20,13 @@ void getTerminalDimensions(int *row, int *col);
 
 int main(int argc, char *argv[]){
 	srand(time(NULL));
-	printf("Hello, world!\n");
-
 
 	int row, col;
 	getTerminalDimensions(&row, &col);
 
-	FL fL[ARROW_NUMBER];
-	initFLArray(fL, ARROW_NUMBER, row, col);
+	// FL *fL = initFLArray(ARROW_NUMBER, row, col);
+	FL *fL = initFLArray(row, row, col);
 
-	// printf("%d %d %d %d\n", fL[0].x, fL[0].y, fL[0].status, fL[0].size);
 
 	emptyScreen();
 	while(true){
@@ -37,8 +40,10 @@ int main(int argc, char *argv[]){
 		}
 
 		usleep(150 * 1000);
-		// while(getchar() != '\n');
+		// while(getchar() != '\n'); // For step by step progression
 	}
+
+	
 
 
 	return EXIT_SUCCESS;

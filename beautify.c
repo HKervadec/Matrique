@@ -14,11 +14,11 @@ void emptyLastLine(int row, int col){
 	}
 }
 
-void initFL(FL *fL, int row, int col){
-	fL->x = rand() % (row + MAX_ARROW_SIZE) - row ;
+void initFL(FL *fL, int row, int col, int length){
+	fL->x = rand() % (row + length) - row ;
 	fL->y = rand() % col;
 
-	fL->size = rand() % (MAX_ARROW_SIZE-1) + 1;
+	fL->size = length;
 	fL->arrow = malloc(fL->size * sizeof(char));
 
 	fL->status = rand() % fL->size;
@@ -26,24 +26,28 @@ void initFL(FL *fL, int row, int col){
 
 
 	for(int i = 0 ; i < fL->status ; i++){
-		fL->arrow[i] = rand() % (127-32)+32;
+		fL->arrow[i] = randomChar();
 	}
 }
 
-void initFLArray(FL fL[], int size, int row, int col){
+FL *initFLArray(int size, int row, int col){
+	FL *fL = malloc(size * sizeof(FL));
+
 	for(int i = 0 ; i < size ; i++){
-		initFL(&fL[i], row, col);
+		initFL(&fL[i], row, col, MAX_ARROW_SIZE);
 	}
+
+	return fL;
 }
 
 void resetFL(FL *fL, int row, int col){
-	fL->x = rand() % (row + MAX_ARROW_SIZE) - row ;
+	fL->x = rand() % (row + fL->size) - row ;
 	fL->y = rand() % col;
 
 	fL->status = rand() % fL->size;
 
 	for(int i = 0 ; i < fL->status ; i++){
-		fL->arrow[i] = rand() % (127-32)+32;
+		fL->arrow[i] = randomChar();
 	}
 }
 
@@ -74,12 +78,17 @@ void updateFL(FL *fL, int row, int col){
 	}
 
 
-	fL->status = (fL->status >= MAX_ARROW_SIZE) ? MAX_ARROW_SIZE : fL->status+1;
+	fL->status = (fL->status >= fL->size) ? fL->size : fL->status+1;
 
 
 	for(int i = fL->status-1 ; i >= 1 ; i--){
 		fL->arrow[i] = fL->arrow[i-1];
 	}
 
-	fL->arrow[0] = rand() % (127 - 32) + 32;
+	fL->arrow[0] = randomChar(); 
+}
+
+
+char randomChar(){
+	return rand() % (127 - 32) + 32;
 }
