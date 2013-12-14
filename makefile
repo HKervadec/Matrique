@@ -15,7 +15,7 @@ all: clean matrique.out
 	
 beautify.o: beautify.c beautify.h
 
-matrique.o: matrique.c beautify.h vroot.h
+matrique.o: matrique.c beautify.h
 
 clean:
 	rm *.o matrique.out
