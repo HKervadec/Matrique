@@ -9,8 +9,12 @@ void emptyScreen(){
 }
 
 void emptyLastLine(int row, int col){
+	emptyLine(row, col);
+}
+
+void emptyLine(int line, int col){
 	for(int i = 0 ; i < col ; i++){
-		printf("\033[%d;%dH ", row, i);
+		printf("\033[%d;%dH ", line, i);
 	}
 }
 
@@ -72,7 +76,7 @@ void printFL(FL *fL, int row, int col){
 }
 
 void updateFL(FL *fL, int row, int col){
-	fL->x++;
+	fL->x += 1;
 	if(fL->x > row){
 		resetFL(fL, row, col);
 	}

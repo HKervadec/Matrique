@@ -24,7 +24,8 @@ int main(int argc, char *argv[]){
 	int row, col;
 	getTerminalDimensions(&row, &col);
 
-	// FL *fL = initFLArray(ARROW_NUMBER, row, col);
+	int arrow_number = row;
+
 	FL *fL = initFLArray(row, row, col);
 
 
@@ -34,8 +35,8 @@ int main(int argc, char *argv[]){
 
 		emptyLastLine(row, col);
 
-		for(int j = 0 ; j < ARROW_NUMBER ; j++){
-			updateFL(&fL[j], row, col);
+		for(int j = 0 ; j < arrow_number ; j++){
+			updateFL(&(fL[j]), row, col);
 			printFL(&fL[j], row, col);
 		}
 

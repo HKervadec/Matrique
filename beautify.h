@@ -22,6 +22,7 @@ typedef struct FL{
 
 
 void emptyScreen();
+void emptyLine(int line, int col);
 void emptyLastLine(int row, int col);
 
 void initFL(FL *fL, int row, int col, int length);
