@@ -12,6 +12,7 @@
 #define CYAN    "\x1b[0;36m"
 #define RESET   "\x1b[0;0m"
 
+
 typedef struct FL{
 	int x;
 	int y;
@@ -22,14 +23,13 @@ typedef struct FL{
 
 
 void emptyScreen();
-void emptyLine(int line, int col);
-void emptyLastLine(int row, int col);
+
 
 void initFL(FL *fL, int row, int col, int length);
 FL *initFLArray(int size, int row, int col);
 
 void resetFL(FL *fL, int row, int col);
-void printFL(FL *fL, int row, int col);
+
 void updateFL(FL *fL, int row, int col);
 
 char randomChar();

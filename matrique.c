@@ -1,19 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
 #include <time.h>
 #include <stdbool.h>
 
-#include <X11/Xlib.h>
-
-// #include "vroot.h"
-
-
 #include "beautify.h"
 
+#ifdef WINDOZE
+	#include "windoze.h"
+#endif
 
-#define ARROW_NUMBER 64
+#ifdef LOONIX
+	#include "loonix.h"
+#endif
 
 
 void getTerminalDimensions(int *row, int *col);
@@ -21,39 +19,35 @@ void getTerminalDimensions(int *row, int *col);
 int main(int argc, char *argv[]){
 	srand(time(NULL));
 
+	PREP
+	
 	int row, col;
 	getTerminalDimensions(&row, &col);
+	
+	printf("%d %d\n", row, col);
 
 	int arrow_number = row;
 
 	FL *fL = initFLArray(row, row, col);
 
 
-	emptyScreen();
+	// emptyScreen();
 	while(true){
 		getTerminalDimensions(&row, &col);
 
-		emptyLastLine(row, col);
+		CALL_EMPTY_LAST_LINE
 
 		for(int j = 0 ; j < arrow_number ; j++){
 			updateFL(&(fL[j]), row, col);
-			printFL(&fL[j], row, col);
+			CALL_PRINT
 		}
 
-		usleep(150 * 1000);
-		// while(getchar() != '\n'); // For step by step progression
+		// usleep(150 * 1000);
+		while(getchar() != '\n'); // For step by step progression
 	}
 
-	
+	END
 
 
 	return EXIT_SUCCESS;
-}
-
-void getTerminalDimensions(int *row, int *col){
-	struct winsize w;
-	ioctl(0, TIOCGWINSZ, &w);
-
-	*row = w.ws_row;
-	*col = w.ws_col;
 }
