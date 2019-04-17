@@ -63,14 +63,14 @@ void printFL(FL *fL, int row, int col){
 
 	int lim = fL->status - 1;
 	if(fL->x + lim > 0){
-		printf(GREEN_BRIGHT "\033[%d;%dH%c" GREEN
-				, fL->x + lim, fL->y, fL->arrow[lim]);
+		printf(GREEN_BRIGHT "\033[%d;%dH%c" GREEN,
+				fL->x + lim, fL->y, fL->arrow[lim]);
 	}
 
 	for(int i = 0 ; i < lim ; i++){
 		if(fL->x + i > 0){
-			printf("\033[%d;%dH%c"
-				, fL->x + i, fL->y, fL->arrow[i]);
+			printf("\033[%d;%dH%c",
+				fL->x + i, fL->y, fL->arrow[i]);
 		}
 	}
 }
@@ -89,7 +89,7 @@ void updateFL(FL *fL, int row, int col){
 		fL->arrow[i] = fL->arrow[i-1];
 	}
 
-	fL->arrow[0] = randomChar(); 
+	fL->arrow[0] = randomChar();
 }
 
 

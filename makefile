@@ -1,21 +1,14 @@
 CC = gcc
-CFLAGS = -g -std=c99 
+CFLAGS = -Wall -pedantic-errors
 OBJ = matrique.o beautify.o
+
+all: matrique.out
+
+beautify.o: beautify.c beautify.h
+matrique.o: matrique.c beautify.h
 
 matrique.out: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@
-
-64: CFLAGS += -m64 
-32: CFLAGS += -m32
-
-64 32: all
-
-all: clean matrique.out
-	
-	
-beautify.o: beautify.c beautify.h
-
-matrique.o: matrique.c beautify.h
 
 clean:
 	rm *.o matrique.out

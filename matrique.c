@@ -1,25 +1,19 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
 #include <time.h>
 #include <stdbool.h>
+#include <sys/ioctl.h>
 
 #include <X11/Xlib.h>
 
-// #include "vroot.h"
-
-
 #include "beautify.h"
-
-
-#define ARROW_NUMBER 64
-
 
 void getTerminalDimensions(int *row, int *col);
 
 int main(int argc, char *argv[]){
 	srand(time(NULL));
+
+	const struct timespec sleep_time = {0, 75*1000*1000}; // 75ms
 
 	int row, col;
 	getTerminalDimensions(&row, &col);
@@ -27,7 +21,6 @@ int main(int argc, char *argv[]){
 	int arrow_number = row;
 
 	FL *fL = initFLArray(row, row, col);
-
 
 	emptyScreen();
 	while(true){
@@ -40,12 +33,9 @@ int main(int argc, char *argv[]){
 			printFL(&fL[j], row, col);
 		}
 
-		usleep(150 * 1000);
+		nanosleep(&sleep_time, NULL);
 		// while(getchar() != '\n'); // For step by step progression
 	}
-
-	
-
 
 	return EXIT_SUCCESS;
 }
