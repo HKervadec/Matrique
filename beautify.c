@@ -4,13 +4,16 @@
 
 #include "beautify.h"
 
+
 void emptyScreen(){
 	printf("\033[2J");
 }
 
+
 void emptyLastLine(int row, int col){
 	emptyLine(row, col);
 }
+
 
 void emptyLine(int line, int col){
 	for(int i = 0 ; i < col ; i++){
@@ -18,21 +21,14 @@ void emptyLine(int line, int col){
 	}
 }
 
-void initFL(FL *fL, int row, int col, int length){
-	fL->x = rand() % (row + length) - row ;
-	fL->y = rand() % col;
 
+void initFL(FL *fL, int row, int col, int length){
 	fL->size = length;
 	fL->arrow = malloc(fL->size * sizeof(char));
 
-	fL->status = rand() % fL->size;
-
-
-
-	for(int i = 0 ; i < fL->status ; i++){
-		fL->arrow[i] = randomChar();
-	}
+	resetFL(fL, row, col);
 }
+
 
 FL *initFLArray(int size, int row, int col){
 	FL *fL = malloc(size * sizeof(FL));
@@ -43,6 +39,7 @@ FL *initFLArray(int size, int row, int col){
 
 	return fL;
 }
+
 
 void resetFL(FL *fL, int row, int col){
 	fL->x = rand() % (row + fL->size) - row ;
@@ -74,6 +71,7 @@ void printFL(FL *fL, int row, int col){
 		}
 	}
 }
+
 
 void updateFL(FL *fL, int row, int col){
 	fL->x += 1;

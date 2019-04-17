@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
 
 	int arrow_number = row;
 
-	FL *fL = initFLArray(row, row, col);
+	FL *fL = initFLArray(arrow_number, row, col);
 
 	emptyScreen();
 	while(true){
