@@ -3,28 +3,36 @@
 #include <time.h>
 #include <stdbool.h>
 #include <sys/ioctl.h>
+#include <ncurses.h>
 
 #include <X11/Xlib.h>
 
 #include "beautify.h"
 
-void getTerminalDimensions(int *row, int *col);
-
 int main(int argc, char *argv[]){
 	srand(time(NULL));
+	initscr();
+	if(has_colors() == FALSE)
+	{	endwin();
+		printf("Your terminal does not support color\n");
+		exit(1);
+	}
+	use_default_colors();
+	start_color();
+	init_pair(1, COLOR_GREEN, -1);
 
-	const struct timespec sleep_time = {0, 75*1000*1000}; // 75ms
+	const struct timespec sleep_time = {0, 100*1000*1000}; // 75ms
 
 	int row, col;
-	getTerminalDimensions(&row, &col);
+	getmaxyx(stdscr, row, col);
 
 	int arrow_number = row;
 
 	FL *fL = initFLArray(arrow_number, row, col);
 
-	emptyScreen();
 	while(true){
-		getTerminalDimensions(&row, &col);
+		getmaxyx(stdscr, row, col);
+		clear(); // Causes flicker but does not work yet with the erasing
 
 		emptyLastLine(row, col);
 
@@ -33,17 +41,11 @@ int main(int argc, char *argv[]){
 			printFL(&fL[j], row, col);
 		}
 
+		refresh();
 		nanosleep(&sleep_time, NULL);
 		// while(getchar() != '\n'); // For step by step progression
 	}
 
+	endwin();
 	return EXIT_SUCCESS;
-}
-
-void getTerminalDimensions(int *row, int *col){
-	struct winsize w;
-	ioctl(0, TIOCGWINSZ, &w);
-
-	*row = w.ws_row;
-	*col = w.ws_col;
 }

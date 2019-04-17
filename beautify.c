@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <ncurses.h>
 
 #include "beautify.h"
 
@@ -17,7 +18,7 @@ void emptyLastLine(int row, int col){
 
 void emptyLine(int line, int col){
 	for(int i = 0 ; i < col ; i++){
-		printf("\033[%d;%dH ", line, i);
+		mvprintw(line, i, "\b");
 	}
 }
 
@@ -55,21 +56,23 @@ void resetFL(FL *fL, int row, int col){
 
 void printFL(FL *fL, int row, int col){
 	if(fL->x > 0){
-		printf("\033[%d;%dH ", fL->x-1, fL->y);
+		mvprintw(fL->x-1, fL->y, "\b");
 	}
 
+	attron(COLOR_PAIR(1));
 	int lim = fL->status - 1;
-	if(fL->x + lim > 0){
-		printf(GREEN_BRIGHT "\033[%d;%dH%c" GREEN,
-				fL->x + lim, fL->y, fL->arrow[lim]);
+	if(fL->x + lim >= 0){
+		attron(A_BOLD);
+		mvprintw(fL->x + lim, fL->y, "%c", fL->arrow[lim]);
+		attroff(A_BOLD);
 	}
 
 	for(int i = 0 ; i < lim ; i++){
-		if(fL->x + i > 0){
-			printf("\033[%d;%dH%c",
-				fL->x + i, fL->y, fL->arrow[i]);
+		if(fL->x + i >= 0){
+			mvprintw(fL->x + i, fL->y, "%c", fL->arrow[i]);
 		}
 	}
+	attroff(COLOR_PAIR(1));
 }
 
 
