@@ -56,23 +56,27 @@ void resetFL(FL *fL, int row, int col){
 
 
 void printFL(FL *fL, int row, int col){
-	// if(fL->x > 0){
-	// 	mvprintw(fL->x-1, fL->y, " ");
-	// }
+	if(fL->x > 0){
+		attron(COLOR_PAIR(1));
+		mvaddch(fL->x-1, fL->y, ' ');
+		attroff(COLOR_PAIR(1));
+	}
 
 	int lim = fL->status - 1;
 	if(fL->x + lim >= 0){
 		attron(COLOR_PAIR(lim+1));
 		attron(A_BOLD);
-		mvprintw(fL->x + lim, fL->y, "%c", fL->arrow[lim]);
+		// mvprintw(fL->x + lim, fL->y, "%c", fL->arrow[lim]);
+		mvaddch(fL->x + lim, fL->y, fL->arrow[lim]);
 		attroff(A_BOLD);
-		attron(COLOR_PAIR(lim+1));
+		attroff(COLOR_PAIR(lim+1));
 	}
 
 	for(int i = 0 ; i < lim ; i++){
 		if(fL->x + i >= 0){
 			attron(COLOR_PAIR(i+1));
-			mvprintw(fL->x + i, fL->y, "%c", fL->arrow[i]);
+			// mvprintw(fL->x + i, fL->y, "%c", fL->arrow[i]);
+			mvaddch(fL->x + i, fL->y, fL->arrow[i]);
 			attroff(COLOR_PAIR(i+1));
 		}
 	}

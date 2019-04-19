@@ -1,7 +1,7 @@
 #ifndef BEAUTIFY
 #define BEAUTIFY
 
-#define MAX_ARROW_SIZE 24
+#define MAX_ARROW_SIZE 16
 
 #define MIN_GREEN 400
 #define MAX_GREEN 1000
