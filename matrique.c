@@ -19,9 +19,15 @@ int main(int argc, char *argv[]){
 	}
 	use_default_colors();
 	start_color();
-	init_pair(1, COLOR_GREEN, -1);
 
-	const struct timespec sleep_time = {0, 100*1000*1000}; // 75ms
+	for(int i = 0 ; i < MAX_ARROW_SIZE ; i++){
+		const int green_step = ((MAX_GREEN - MIN_GREEN) / MAX_ARROW_SIZE) ;
+		init_color(i, 0, MIN_GREEN + i * green_step, 0);
+		init_pair(i+1, i, -1);
+	}
+
+	const struct timespec sleep_time = {0, 32*1000*1000}; // N ms
+	// const struct timespec sleep_time = {1, 0}; // 75ms
 
 	int row, col;
 	getmaxyx(stdscr, row, col);
@@ -32,9 +38,10 @@ int main(int argc, char *argv[]){
 
 	while(true){
 		getmaxyx(stdscr, row, col);
-		clear(); // Causes flicker but does not work yet with the erasing
+		// clear(); // Causes flicker but does not work yet with the erasing
+		erase();
 
-		emptyLastLine(row, col);
+		// emptyLastLine(row, col);
 
 		for(int j = 0 ; j < arrow_number ; j++){
 			updateFL(&(fL[j]), row, col);

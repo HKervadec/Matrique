@@ -7,18 +7,19 @@
 
 
 void emptyScreen(){
-	printf("\033[2J");
+	// printf("\033[2J");
+	clear();
 }
 
 
 void emptyLastLine(int row, int col){
-	emptyLine(row, col);
+	// emptyLine(row - 1, col);
 }
 
 
 void emptyLine(int line, int col){
 	for(int i = 0 ; i < col ; i++){
-		mvprintw(line, i, "\b");
+		mvprintw(line, i, " ");
 	}
 }
 
@@ -55,24 +56,26 @@ void resetFL(FL *fL, int row, int col){
 
 
 void printFL(FL *fL, int row, int col){
-	if(fL->x > 0){
-		mvprintw(fL->x-1, fL->y, "\b");
-	}
+	// if(fL->x > 0){
+	// 	mvprintw(fL->x-1, fL->y, " ");
+	// }
 
-	attron(COLOR_PAIR(1));
 	int lim = fL->status - 1;
 	if(fL->x + lim >= 0){
+		attron(COLOR_PAIR(lim+1));
 		attron(A_BOLD);
 		mvprintw(fL->x + lim, fL->y, "%c", fL->arrow[lim]);
 		attroff(A_BOLD);
+		attron(COLOR_PAIR(lim+1));
 	}
 
 	for(int i = 0 ; i < lim ; i++){
 		if(fL->x + i >= 0){
+			attron(COLOR_PAIR(i+1));
 			mvprintw(fL->x + i, fL->y, "%c", fL->arrow[i]);
+			attroff(COLOR_PAIR(i+1));
 		}
 	}
-	attroff(COLOR_PAIR(1));
 }
 
 

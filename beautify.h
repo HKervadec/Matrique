@@ -1,16 +1,10 @@
 #ifndef BEAUTIFY
 #define BEAUTIFY
 
-#define MAX_ARROW_SIZE 16
+#define MAX_ARROW_SIZE 24
 
-#define RED     "\x1b[0;31m"
-#define GREEN   "\x1b[0;32m"
-#define GREEN_BRIGHT   "\x1b[1;32m"
-#define YELLOW  "\x1b[0;33m"
-#define BLUE    "\x1b[0;34m"
-#define MAGENTA "\x1b[0;35m"
-#define CYAN    "\x1b[0;36m"
-#define RESET   "\x1b[0;0m"
+#define MIN_GREEN 400
+#define MAX_GREEN 1000
 
 typedef struct FL{
 	int x;
